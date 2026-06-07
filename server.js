@@ -40,7 +40,7 @@ app.post('/api/chat', async (req, res) => {
 
     // Call Gemini Flash Latest (highly compatible, standard model)
     const model = genAI.getGenerativeModel({ 
-        model: "gemini-flash-latest",
+        model: "gemini-2.5-flash",
         systemInstruction: systemPrompt 
     });
 
