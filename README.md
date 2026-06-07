@@ -1,6 +1,10 @@
-# 🎓 AI-Powered College Enquiry Chatbot Widget
+# Live Demo
 
-An interactive, responsive, and embeddable AI chatbot widget designed for university websites (configured for IILM University). The chatbot utilizes the **Google Gemini AI API** to answer queries regarding admissions, fees, courses, placements, and facilities in multiple languages (English, Hindi, and Hinglish).
+https://ai-chatbot-for-college-enquiry-o254.onrender.com# 
+
+#🎓 AI-Powered College Enquiry Chatbot Widget
+
+ An interactive, responsive, and embeddable AI chatbot widget designed for university websites (configured for IILM University). The chatbot utilizes the **Google Gemini AI API** to answer queries regarding admissions, fees, courses, placements, and facilities in multiple languages (English, Hindi, and Hinglish).
 
 It also features a robust **Offline Fallback Mode** to ensure the widget continues to answer common questions even if the API keys are blocked or connection limits are reached.
 
@@ -18,9 +22,9 @@ It also features a robust **Offline Fallback Mode** to ensure the widget continu
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: HTML5, Vanilla CSS3 (Custom transitions, modern typography, glassmorphism elements), Vanilla JavaScript.
+- **Frontend**: HTML5, CSS3, and JavaScript with a responsive UI, smooth animations, and mobile-friendly design.
 - **Backend**: Node.js, Express.js.
-- **AI Engine**: Google Generative AI (`@google/generative-ai` SDK) utilizing `gemini-flash-latest`.
+- **AI Engine**: Google Generative AI (`@google/generative-ai` SDK) utilizing `gemini-2.5-flash`.
 
 ---
 
