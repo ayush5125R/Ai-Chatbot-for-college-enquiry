@@ -59,7 +59,7 @@ app.post('/api/chat', async (req, res) => {
         console.warn("API Error, falling back to offline mode:", apiError.message);
         
         const m = message.toLowerCase();
-        let fallback = "I'm currently running in **Offline Mode** because your Google API keys are blocked by Google. ";
+        let fallback = "The AI service is temporarily unavailable due to usage limits. I can still answer common questions about admissions, courses, fees, placements, and campus facilities using my built-in knowledge base. ";
         
         if (m.includes('admission') || m.includes('process')) {
             fallback += "But based on my data: The admission process at IILM involves online registration, application form submission with SOP, documentation upload, and a personal interview based on merit.";
