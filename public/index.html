@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IILM University Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f8;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        h1 {
+            color: #0b1f3b; /* A typical deep collegiate blue */
+        }
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+        }
+    </style>
+    <!-- Include Widget CSS and JS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome to IILM University</h1>
+        <p>This is a placeholder page simulating the official IILM website.</p>
+        <p>Notice the chatbot widget in the bottom right corner?</p>
+    </div>
+
+    <!-- The actual widget code that would be copied to any website -->
+    <script src="widget.js"></script>
+    <script>
+        // Initialize the widget
+        window.addEventListener('DOMContentLoaded', () => {
+             const backendUrl = window.location.origin.startsWith('http') ? window.location.origin : 'http://localhost:5000';
+             IILMChatWidget.init(backendUrl);
+        });
+    </script>
+</body>
+</html>
