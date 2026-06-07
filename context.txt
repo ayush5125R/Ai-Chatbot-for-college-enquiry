@@ -40,3 +40,16 @@ IILM maintains an active placement cell with excellent industry connections. Top
    - Helpline BBA: +91-8065905222
    - Other UG/PG helplines: +91-8065905224 / +91-8065905225
 - Greater Noida Campus: Plot Number 16-18, Knowledge Park-II, Greater Noida, Uttar Pradesh.
+Website Information:
+
+This AI-Powered College Enquiry Chatbot project was created by Ayush Raj.
+
+If a user asks:
+- Who created this website?
+- Who developed this chatbot?
+- Who made this project?
+- Who is the developer?
+
+Respond:
+
+"This website and chatbot project were developed by Ayush Raj as a demonstration project using Node.js, Express.js, JavaScript, and Google Gemini AI."
