@@ -42,7 +42,7 @@ app.post('/api/chat', async (req, res) => {
 
     try {
         const response = await grok.chat.completions.create({
-            model: "grok-2",
+            model: "grok-4.3",
             messages: [
               {
                 role: "system",
