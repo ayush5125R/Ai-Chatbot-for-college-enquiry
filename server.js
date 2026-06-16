@@ -12,10 +12,10 @@ app.use(express.json());
 // Serve static frontend files from 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Initialize Grok (xAI) client
-const grok = new OpenAI({
-  apiKey: process.env.GROK_API_KEY,
-  baseURL: 'https://api.x.ai/v1',
+// Initialize GroqCloud client
+const groq = new OpenAI({
+  apiKey: process.env.GROQ_API_KEY,
+  baseURL: 'https://api.groq.com/openai/v1',
 });
 
 // Read the prompt context once at startup
@@ -36,13 +36,13 @@ app.post('/api/chat', async (req, res) => {
       return res.status(400).json({ error: "Message is required" });
     }
 
-    if (!process.env.GROK_API_KEY || process.env.GROK_API_KEY === 'your_grok_api_key_here') {
-       return res.status(500).json({ error: "Please configure your GROK_API_KEY in the .env file" });
+    if (!process.env.GROQ_API_KEY || process.env.GROQ_API_KEY === 'your_groq_api_key_here') {
+       return res.status(500).json({ error: "Please configure your GROQ_API_KEY in the .env file" });
     }
 
     try {
-        const response = await grok.chat.completions.create({
-            model: "grok-4.3",
+        const response = await groq.chat.completions.create({
+            model: "llama-3.3-70b-versatile",
             messages: [
               {
                 role: "system",
@@ -59,7 +59,7 @@ app.post('/api/chat', async (req, res) => {
         res.json({ reply: response.choices[0].message.content });
     } catch(apiError) {
         // --- OFFLINE FALLBACK MODE ---
-        // If Grok API is temporarily unavailable
+        // If Groq API is temporarily unavailable
         console.warn("API Error, falling back to offline mode:", apiError.message);
         
         const m = message.toLowerCase();
@@ -79,7 +79,7 @@ app.post('/api/chat', async (req, res) => {
         res.json({ reply: fallback });
     }
   } catch (error) {
-    console.error("Error communicating with Grok API:", error);
+    console.error("Error communicating with Groq API:", error);
     res.status(500).json({ error: "Sorry, I am facing some technical issues connecting to the server. Please try again later." });
   }
 });
