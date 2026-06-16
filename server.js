@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { OpenAI } = require('openai');
 require('dotenv').config();
 
 const app = express();
@@ -12,9 +12,11 @@ app.use(express.json());
 // Serve static frontend files from 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Initialize Google GenAI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: "Init..." });
+// Initialize Grok (xAI) client
+const grok = new OpenAI({
+  apiKey: process.env.GROK_API_KEY,
+  baseURL: 'https://api.x.ai/v1',
+});
 
 // Read the prompt context once at startup
 let systemPrompt = "You are a helpful assistant.";
@@ -34,32 +36,34 @@ app.post('/api/chat', async (req, res) => {
       return res.status(400).json({ error: "Message is required" });
     }
 
-    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_gemini_api_key_here') {
-       return res.status(500).json({ error: "Please configure your GEMINI_API_KEY in the .env file" });
+    if (!process.env.GROK_API_KEY || process.env.GROK_API_KEY === 'your_grok_api_key_here') {
+       return res.status(500).json({ error: "Please configure your GROK_API_KEY in the .env file" });
     }
 
-    // Call Gemini Flash Latest (highly compatible, standard model)
-    const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.5-flash",
-        systemInstruction: systemPrompt 
-    });
-
     try {
-        const result = await model.generateContent({
-            contents: [{ role: "user", parts: [{ text: message }] }],
-            generationConfig: {
-            temperature: 0.2, // Keep temperature low to stay factual
-            }
+        const response = await grok.chat.completions.create({
+            model: "grok-2",
+            messages: [
+              {
+                role: "system",
+                content: systemPrompt
+              },
+              {
+                role: "user",
+                content: message
+              }
+            ],
+            temperature: 0.2,
         });
 
-        res.json({ reply: result.response.text() });
+        res.json({ reply: response.choices[0].message.content });
     } catch(apiError) {
         // --- OFFLINE FALLBACK MODE ---
-        // If Google API continues blocking the user's account with 403s!
+        // If Grok API is temporarily unavailable
         console.warn("API Error, falling back to offline mode:", apiError.message);
         
         const m = message.toLowerCase();
-        let fallback = "The AI service is temporarily unavailable due to usage limits. I can still answer common questions about admissions, courses, fees, placements, and campus facilities using my built-in knowledge base. ";
+        let fallback = "The AI service is temporarily unavailable. I can still answer common questions about admissions, courses, fees, placements, and campus facilities using my built-in knowledge base. ";
         
         if (m.includes('admission') || m.includes('process')) {
             fallback += "But based on my data: The admission process at IILM involves online registration, application form submission with SOP, documentation upload, and a personal interview based on merit.";
@@ -75,7 +79,7 @@ app.post('/api/chat', async (req, res) => {
         res.json({ reply: fallback });
     }
   } catch (error) {
-    console.error("Error communicating with Gemini API:", error);
+    console.error("Error communicating with Grok API:", error);
     res.status(500).json({ error: "Sorry, I am facing some technical issues connecting to the server. Please try again later." });
   }
 });

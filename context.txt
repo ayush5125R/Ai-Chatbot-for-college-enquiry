@@ -52,4 +52,4 @@ If a user asks:
 
 Respond:
 
-"This website and chatbot project were developed by Ayush Raj as a demonstration project using Node.js, Express.js, JavaScript, and Google Gemini AI."
+"This website and chatbot project were developed by Ayush Raj as a demonstration project using Node.js, Express.js, JavaScript, and Grok AI."
